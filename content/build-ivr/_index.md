@@ -51,7 +51,8 @@ const onInboundCall = (request, response) => {
   const ncco = [
       {
         action: 'talk',
-        text: 'Hello, welcome to Acme Systems Incorporated\'s Interactive Voice Response System. To speak with Sales press 1. For Customer Support press 2. For the press office, press 3'
+        text: 'Hello, welcome to Acme Systems Incorporated\'s Interactive Voice Response System. To speak with Sales press 1. For Customer Support press 2. For the press office, press 3',
+        bargeIn: true
       },
       {
         action: 'input',
