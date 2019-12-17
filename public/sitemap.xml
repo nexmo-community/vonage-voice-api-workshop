@@ -3,6 +3,10 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://vonage-voice-api-workshop.nexmodev.com/</loc>
+  </url>
+  
+  <url>
     <loc>https://vonage-voice-api-workshop.nexmodev.com/first-call/</loc>
   </url>
   
@@ -28,10 +32,6 @@
   
   <url>
     <loc>https://vonage-voice-api-workshop.nexmodev.com/tags/</loc>
-  </url>
-  
-  <url>
-    <loc>https://vonage-voice-api-workshop.nexmodev.com/</loc>
   </url>
   
 </urlset>

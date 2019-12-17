@@ -12,20 +12,20 @@
     <title>Record a Call :: Voice API Workshop</title>
 
     
-    <link href="/css/nucleus.css?1576607919" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1576607919" rel="stylesheet">
-    <link href="/css/hybrid.css?1576607919" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1576607919" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1576607919" rel="stylesheet">
-    <link href="/css/auto-complete.css?1576607919" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1576607919" rel="stylesheet">
-    <link href="/css/theme.css?1576607919" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1576607919" rel="stylesheet">
+    <link href="/css/nucleus.css?1576614714" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1576614714" rel="stylesheet">
+    <link href="/css/hybrid.css?1576614714" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1576614714" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1576614714" rel="stylesheet">
+    <link href="/css/auto-complete.css?1576614714" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1576614714" rel="stylesheet">
+    <link href="/css/theme.css?1576614714" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1576614714" rel="stylesheet">
     
-      <link href="/css/theme-blue.css?1576607919" rel="stylesheet">
+      <link href="/css/theme-blue.css?1576614714" rel="stylesheet">
     
 
-    <script src="/js/jquery-3.3.1.min.js?1576607919"></script>
+    <script src="/js/jquery-3.3.1.min.js?1576614714"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -51,14 +51,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1576607919"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1576607919"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1576614714"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1576614714"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/vonage-voice-api-workshop.nexmodev.com\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1576607919"></script>
+<script type="text/javascript" src="/js/search.js?1576614714"></script>
 
     
   </div>
@@ -223,7 +223,7 @@
             
           
           
-            <a href='/'>Voice API Workshop</a> > Record a Call
+            <a href='/'>Getting Started with Voice API</a> > Record a Call
           
          
           
@@ -234,7 +234,18 @@
                 
                     <div class="progress">
     <div class="wrapper">
-<nav id="TableOfContents"></nav>
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#adding-a-record-action">Adding a record action</a></li>
+    <li><a href="#adding-a-recordingfinished-webhook">Adding a recordingFinished webhook</a>
+      <ul>
+        <li><a href="#register-the-new-route">Register the new route</a></li>
+        <li><a href="#add-the-route-complete-handler">Add the route complete handler</a></li>
+      </ul>
+    </li>
+    <li><a href="#retrieving-a-recording">Retrieving a recording</a></li>
+  </ul>
+</nav>
     </div>
 </div>
 
@@ -272,7 +283,71 @@
             ]
             <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">json</span>(<span style="color:#a6e22e">ncco</span>)
             <span style="color:#66d9ef">break</span>;
-</code></pre></div><p>We are going to edit this snippet of code to actually instruct Nexmo to preform the voice recording for us. To do this, we are going to add another action. Let's modify the snippet of code above to hold this record action.</p>
+</code></pre></div><h2 id="adding-a-record-action">Adding a record action</h2>
+<p>We are going to edit this snippet of code to actually instruct Nexmo to preform the voice recording for us. To do this, we are going to add another action. Let's modify the snippet of code above to hold this record action.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;3&#34;</span><span style="color:#f92672">:</span>
+            <span style="color:#a6e22e">ncco</span> <span style="color:#f92672">=</span>
+            [
+                {
+                    <span style="color:#a6e22e">action</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;talk&#39;</span>,                    
+                    <span style="color:#a6e22e">text</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;You have asked to speak with the press office. Unfortunately no one from the press office is currently available. Please leave a message after the tone.&#39;</span>
+                },
+                {
+                    <span style="color:#a6e22e">action</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;record&#39;</span>,
+                    <span style="color:#a6e22e">beepStart</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+                    <span style="color:#a6e22e">eventUrl</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">base_url</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/webhooks/recordingFinished</span><span style="color:#e6db74">`</span>],
+                    <span style="color:#a6e22e">endOnSilence</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>
+                }
+            ]
+            <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">json</span>(<span style="color:#a6e22e">ncco</span>)
+            <span style="color:#66d9ef">break</span>;
+</code></pre></div><p>Notice how the talk action now tells caller to leave a message, as well as the new record action.</p>
+<p>The record action provides an eventUrl, which is the webhook we are going to receive a notification on when the call finishes recording. It also has beepStart set to true, which will beep just prior to thee start of the recording, and it has an endOnSilence parameter set to 3, this will end the recording after 3 seconds of silence is detected.</p>
+<h2 id="adding-a-recordingfinished-webhook">Adding a recordingFinished webhook</h2>
+<p>The final stop we need to take here is to add the recordingFinished webhook logic to our app, and to register a route for it.</p>
+<h3 id="register-the-new-route">Register the new route</h3>
+<p>Modify the app code that we saw earlier from:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">app</span>
+  .<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;/webhooks/answer&#39;</span>, <span style="color:#a6e22e">onInboundCall</span>)
+  .<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/webhooks/dtmf&#39;</span>, <span style="color:#a6e22e">onInput</span>)
+  .<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/webhooks/events&#39;</span>, <span style="color:#a6e22e">onEvent</span>)
+  .<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/webhooks/accountInput&#39;</span>, <span style="color:#a6e22e">onAccountInput</span>)
+</code></pre></div><p>To</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">app</span>
+  .<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;/webhooks/answer&#39;</span>, <span style="color:#a6e22e">onInboundCall</span>)
+  .<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/webhooks/dtmf&#39;</span>, <span style="color:#a6e22e">onInput</span>)
+  .<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/webhooks/events&#39;</span>, <span style="color:#a6e22e">onEvent</span>)
+  .<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/webhooks/accountInput&#39;</span>, <span style="color:#a6e22e">onAccountInput</span>)
+  .<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/webhooks/recordingFinished&#39;</span>, <span style="color:#a6e22e">onRecordingFinished</span>)
+</code></pre></div><h3 id="add-the-route-complete-handler">Add the route complete handler</h3>
+<p>The next thing to do is to add the onrecordingFinished method to our server for the moment we'll just print out the URL where the recording wound up.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">onRecordingFinished</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">request</span>, <span style="color:#a6e22e">response</span>) =&gt;{
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">recording_url</span>)
+    <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">status</span>(<span style="color:#ae81ff">200</span>).<span style="color:#a6e22e">send</span>();
+}
+</code></pre></div><p>Now you can run <code>node index.js</code> again and call into your nexmo number, press 3 and leave a message for the press office</p>
+<h2 id="retrieving-a-recording">Retrieving a recording</h2>
+<p>Now that you have actually made the recording the next logical question is &lsquo;well how do I retrieve it?&rsquo; As you could probably imagine this will involve the url that we just printed above. The Nexmo Client will actually enable us to pull down the recording. Let's harken back to the (first call)[/first-call].</p>
+<p>We will need to first require the nexmo client so let's add <code>const Nexmo = require('nexmo')</code> to the top of the index.js file</p>
+<p>Next we'll initialize it like we did in the first call section</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">nexmo</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Nexmo</span>({
+  <span style="color:#a6e22e">apiKey</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">NEXMO_API_KEY</span>,
+  <span style="color:#a6e22e">apiSecret</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">NEXMO_API_SECRET</span>,
+  <span style="color:#a6e22e">applicationId</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">NEXMO_APPLICATION_ID</span>,
+  <span style="color:#a6e22e">privateKey</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">NEXMO_APPLICATION_PRIVATE_KEY_PATH</span>
+})
+</code></pre></div><p>with this complete let's now modify our onRecordingFinished to actually preform the save logic:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">onRecordingFinished</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">request</span>, <span style="color:#a6e22e">response</span>) =&gt;{
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">recording_url</span>)
+    <span style="color:#a6e22e">nexmo</span>.<span style="color:#a6e22e">files</span>.<span style="color:#a6e22e">save</span>(<span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">recording_url</span>,<span style="color:#e6db74">&#39;test.mp3&#39;</span>,(<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+        <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">err</span>) { <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>(<span style="color:#a6e22e">err</span>); }
+        <span style="color:#66d9ef">else</span> {
+            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">res</span>);
+        }
+      });
+    <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">status</span>(<span style="color:#ae81ff">200</span>).<span style="color:#a6e22e">send</span>();
+}
+</code></pre></div><p>With this we are now able to have someone call in, press 3 to speak with the press office, which then prompts them to leave a voicemail with the press office, and to download that voicemail.</p>
 
 
 
@@ -414,19 +489,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1576607919"></script>
-    <script src="/js/perfect-scrollbar.min.js?1576607919"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1576607919"></script>
-    <script src="/js/jquery.sticky.js?1576607919"></script>
-    <script src="/js/featherlight.min.js?1576607919"></script>
-    <script src="/js/highlight.pack.js?1576607919"></script>
+    <script src="/js/clipboard.min.js?1576614714"></script>
+    <script src="/js/perfect-scrollbar.min.js?1576614714"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1576614714"></script>
+    <script src="/js/jquery.sticky.js?1576614714"></script>
+    <script src="/js/featherlight.min.js?1576614714"></script>
+    <script src="/js/highlight.pack.js?1576614714"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1576607919"></script>
-    <script src="/js/learn.js?1576607919"></script>
-    <script src="/js/hugo-learn.js?1576607919"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1576614714"></script>
+    <script src="/js/learn.js?1576614714"></script>
+    <script src="/js/hugo-learn.js?1576614714"></script>
 
-    <link href="/mermaid/mermaid.css?1576607919" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1576607919"></script>
+    <link href="/mermaid/mermaid.css?1576614714" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1576614714"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>
