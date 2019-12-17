@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://vonage-voice-api-workshop.nexmodev.com/first-call/</loc>
+  </url>
+  
+  <url>
+    <loc>https://vonage-voice-api-workshop.nexmodev.com/answer-call/</loc>
+  </url>
+  
+  <url>
+    <loc>https://vonage-voice-api-workshop.nexmodev.com/user-input/</loc>
+  </url>
+  
+  <url>
+    <loc>https://vonage-voice-api-workshop.nexmodev.com/build-ivr/</loc>
+  </url>
+  
+  <url>
+    <loc>https://vonage-voice-api-workshop.nexmodev.com/record-a-call/</loc>
+  </url>
+  
+  <url>
+    <loc>https://vonage-voice-api-workshop.nexmodev.com/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>https://vonage-voice-api-workshop.nexmodev.com/tags/</loc>
+  </url>
+  
+  <url>
+    <loc>https://vonage-voice-api-workshop.nexmodev.com/</loc>
+  </url>
+  
+</urlset>
