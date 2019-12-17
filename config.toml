@@ -1,3 +1,11 @@
-baseURL = "http://example.org/"
+baseURL = "https://vonage-voice-api-workshop.nexmodev.com/"
 languageCode = "en-us"
-title = "My New Hugo Site"
+title = "Voice API Workshop"
+# Change the default theme to be use when building the site with Hugo
+theme = "hugo-theme-learn"
+[params]
+    themeVariant = "blue"
+
+# For search functionality
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
