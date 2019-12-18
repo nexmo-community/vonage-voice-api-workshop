@@ -111,14 +111,3 @@ Place this code in `index.php`, then use the built-in webserver:
 `php -S localhost:3000`
 
 **Run your code** - if your ngrok server is still running from the previous example then you should be able to simply call your Nexmo number from your cellphone again. Don't forget to bring up the dial pad ready to enter a digit!
-
-### Next Steps: Expand to make a simple IVR
-
-How about expanding your example to make a small IVR (Interactive Voice Response) system? "Press one for sales, two for support ..." you get the idea. Or go sillier and base something on my colleague Tony's [Dial-a-Carol system](https://www.nexmo.com/blog/2018/12/03/dial-a-christmas-carol-with-nexmo-and-python-dr)!
-
-### Next Steps: Record the Call
-
-Nexmo enables call recording, which is useful in many different applications. Take a look at the [NCCO documentation for the `record` action](https://developer.nexmo.com/voice/voice-api/ncco-reference#record) and record the call.
-
-You need to be authenticated to be able to download the call recording - check the first example we did for how to create the client with the application and key you need. There are also code examples [on the developer portal](https://developer.nexmo.com/voice/voice-api/code-snippets/download-a-recording) to help you along.
-
